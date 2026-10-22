@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-.NET 10 microservices e-commerce demo orchestrated with .NET Aspire. All projects live under `src/`. There is no solution file, no test projects, and no `.gitignore` (so `obj/`/`bin/` show up as untracked — don't commit them).
+.NET 10 microservices e-commerce demo orchestrated with .NET Aspire. All projects live under `src/`. There is no solution file, one test project (`src/ECommerce.Web.Tests`, xUnit, covers the Web product filter; not referenced by AppHost), and no `.gitignore` (so `obj/`/`bin/` show up as untracked — don't commit them).
 
 ## Commands
 

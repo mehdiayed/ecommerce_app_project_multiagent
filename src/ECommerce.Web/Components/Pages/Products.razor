@@ -14,6 +14,28 @@
 }
 else
 {
+    <div class="mb-3 d-flex align-items-end gap-2">
+        <div>
+            <label class="form-label" for="product-search">Search products</label>
+            <input id="product-search" class="form-control" style="max-width: 320px" type="search"
+                   placeholder="Search by name or description…"
+                   @bind="_search" @bind:event="oninput" />
+        </div>
+        <button class="btn btn-outline-secondary" type="button" @onclick="ClearSearch"
+                disabled="@(_search.Length == 0)">Clear</button>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(_search))
+    {
+        <p class="text-muted">@_filtered.Count of @_products.Count products</p>
+    }
+
+    @if (_filtered.Count == 0 && !string.IsNullOrWhiteSpace(_search))
+    {
+        <p><em>No products match '@_search.Trim()'</em></p>
+    }
+    else
+    {
     <table class="table">
         <thead>
             <tr>
@@ -25,7 +47,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var p in _products)
+            @foreach (var p in _filtered)
             {
                 <tr>
                     <td>@p.Name</td>
@@ -39,6 +61,7 @@ else
             }
         </tbody>
     </table>
+    }
 
     <h2>Cart</h2>
     @if (_cart.Count == 0)
@@ -71,6 +94,8 @@ else
     private IReadOnlyList<ProductDto>? _products;
     private readonly Dictionary<ProductDto, int> _cart = new();
     private string _customer = "";
+    private string _search = "";
+    private IReadOnlyList<ProductDto> _filtered => ProductFilter.Filter(_products ?? [], _search);
     private bool _placing;
     private string? _message;
     private bool _isError;
@@ -79,6 +104,8 @@ else
     {
         _products = await Catalog.GetProductsAsync();
     }
+
+    private void ClearSearch() => _search = "";
 
     private void AddToCart(ProductDto product)
     {

@@ -151,7 +151,8 @@ Reading the matrix: yellow `on execution` · blue `on hold` · green `done` · r
 
 Kept in sync by the Docs & Sync agent after each successful deployment (last base commit: `e5bec10`). Full details: [docs/TECHNICAL.md](docs/TECHNICAL.md).
 
-- **Projects (6):** `AppHost`, `Catalog.Api`, `Gateway`, `Ordering.Api`, `ServiceDefaults`, `Web`
+- **Projects (6):** `AppHost`, `Catalog.Api`, `Gateway`, `Ordering.Api`, `ServiceDefaults`, `Web` (plus the test project `Web.Tests`, not referenced by AppHost)
+- **Web features:** Products page with a client-side real-time search filter (case-insensitive match on name and description, no API call)
 - **Endpoints (6):** `GET /api/products`, `GET /api/products/{id:int}`, `POST /api/products`, `GET /api/orders`, `GET /api/orders/{id:int}`, `POST /api/orders`
 - **Gateway routes:** `/catalog/{**catch-all}` → catalog-cluster, `/ordering/{**catch-all}` → ordering-cluster
 <!-- docs:sync:end -->
