@@ -26,3 +26,7 @@ Request flow: `Web (Blazor Server) → Gateway (YARP) → { Catalog, Ordering }`
 - **ECommerce.Web** — Blazor Server (interactive server render mode). Pages in `Components/Pages`; typed clients `CatalogApiClient`/`OrderingApiClient` in `Services/` both point at `https+http://gateway`, so paths must include the gateway prefix (`/catalog/...`, `/ordering/...`).
 
 Each project has its own `README.md` with more detail.
+
+## Multi-agent pipeline (repo root, Node.js, no dependencies)
+
+Separate from the .NET app: `npm start` (`node orchestrator/cli.js run`) runs 6 agents (`agents/`) over an event bus (`orchestrator/event-bus.js`). Agents emit `hook:*` events whose handlers live in `hooks/` and are bound by `config/agents.json` via `orchestrator/hook-registry.js` — the loops (Migration⇄Code Scan, QA→Migration) are implemented in those hook files, not in the agents. Default `mode: simulate` (`config/pipeline.json`) fakes work; `--mode=real` runs the shell commands listed there. Test the loops with `--fast --fail-scan=N --fail-qa=N`. Output goes to gitignored `logs/` (`events.jsonl`, `status.json`, `report.md`). See README.md.

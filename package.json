@@ -1,0 +1,19 @@
+{
+  "name": "ecommerce-multiagent-pipeline",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node orchestrator/cli.js run",
+    "monitor": "node scripts/monitor-matrix.js",
+    "skills:install": "node orchestrator/cli.js skills:install",
+    "agent:orchestrate:init": "node orchestrator/cli.js agent:orchestrate:init",
+    "agent:monitor:watch": "node orchestrator/cli.js agent:monitor:watch",
+    "agent:migration:run": "node orchestrator/cli.js agent:migration:run",
+    "agent:codescan:analyze": "node orchestrator/cli.js agent:codescan:analyze",
+    "agent:qa:e2e": "node orchestrator/cli.js agent:qa:e2e",
+    "agent:qa:unit": "node orchestrator/cli.js agent:qa:unit",
+    "agent:devops:deploy": "node orchestrator/cli.js agent:devops:deploy",
+    "agent:docs:sync": "node orchestrator/cli.js agent:docs:sync"
+  }
+}

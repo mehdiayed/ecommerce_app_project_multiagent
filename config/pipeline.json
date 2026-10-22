@@ -1,0 +1,29 @@
+{
+  "task": "Deliver ECommerce feature set (migration, scan, QA, deploy)",
+  "mode": "simulate",
+  "maxScanIterations": 5,
+  "maxQaIterations": 3,
+  "simulate": {
+    "delayMs": 500,
+    "failScan": 0,
+    "failQa": 0
+  },
+  "real": {
+    "commands": {
+      "migration": "dotnet build src/ECommerce.AppHost",
+      "codescan": "dotnet build src/ECommerce.AppHost -warnaserror",
+      "qaUnit": "dotnet test src",
+      "qaE2e": "npx playwright test",
+      "devops": "kubectl version --client"
+    }
+  },
+  "docs": {
+    "commit": true,
+    "push": true,
+    "message": "docs: automatic sync post-deployment",
+    "paths": [
+      "README.md",
+      "docs"
+    ]
+  }
+}

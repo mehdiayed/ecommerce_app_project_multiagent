@@ -1,0 +1,86 @@
+{
+  "orchestrator": {
+    "label": "Orchestrator",
+    "role": "Central brain: drives the flow and the validation loops",
+    "commands": [
+      "agent:orchestrate:init"
+    ],
+    "hooks": {
+      "hook:on-task-dispatch": "hooks/on-task-dispatch.js"
+    }
+  },
+  "monitoring": {
+    "label": "Monitoring",
+    "role": "Real-time status matrix and traceability",
+    "commands": [
+      "agent:monitor:watch"
+    ],
+    "hooks": {
+      "hook:status-update": "hooks/status-update.js"
+    }
+  },
+  "migration": {
+    "label": "Migration",
+    "role": "Feature implementation, DB migrations, UI design",
+    "skills": [
+      "frontend-design"
+    ],
+    "commands": [
+      "agent:migration:run"
+    ],
+    "hooks": {
+      "hook:on-code-rejected": "hooks/on-code-rejected.js"
+    }
+  },
+  "codescan": {
+    "label": "Code Scan",
+    "role": "Code quality, technical debt, local MCP health check",
+    "skills": [
+      "codescene"
+    ],
+    "commands": [
+      "agent:codescan:analyze"
+    ],
+    "hooks": {
+      "hook:on-scan-complete": "hooks/on-scan-complete.js"
+    }
+  },
+  "qa": {
+    "label": "QA",
+    "role": "Functional validation, E2E and unit tests",
+    "skills": [
+      "playwright",
+      "csharp-unit-test"
+    ],
+    "commands": [
+      "agent:qa:e2e",
+      "agent:qa:unit"
+    ],
+    "hooks": {
+      "hook:on-qa-failure": "hooks/on-qa-failure.js"
+    }
+  },
+  "devops": {
+    "label": "DevOps",
+    "role": "Helm/K8s manifests and containerised deployment",
+    "skills": [
+      "kubernetes-skill"
+    ],
+    "commands": [
+      "agent:devops:deploy"
+    ],
+    "hooks": {
+      "hook:on-pipeline-success": "hooks/on-pipeline-success.js"
+    }
+  },
+  "docs": {
+    "label": "Docs & Sync",
+    "role": "Post-deploy: updates README, /docs and .excalidraw diagrams, then commits and pushes",
+    "commands": [
+      "agent:docs:sync"
+    ],
+    "hooks": {
+      "hook:on-deploy-validated": "hooks/on-deploy-validated.js"
+    }
+  }
+}
