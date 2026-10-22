@@ -7,7 +7,7 @@ $skills = @(
   @('https://github.com/anthropics/skills', 'frontend-design'),                          # Agent 3 - Migration
   @('https://github.com/membranedev/application-skills', 'codescene'),                   # Agent 4 - Code Scan
   @('https://github.com/openai/skills', 'playwright'),                                   # Agent 5 - QA
-  @('https://github.com/rushuiguan/claude', 'csharp-unit-test'),                         # Agent 5 - QA
+  # csharp-unit-test, k8s-manifests, deploy-verify are project skills in .claude/skills/ (no install needed)
   @('https://github.com/lukasniessen/kubernetes-skill', 'kubernetes-skill')              # Agent 6 - DevOps
 )
 

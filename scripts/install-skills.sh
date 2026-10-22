@@ -15,6 +15,6 @@ run npx skills add https://github.com/anthropics/skills --skill frontend-design
 run npx skills add https://github.com/membranedev/application-skills --skill codescene
 # Agent 5 — QA
 run npx skills add https://github.com/openai/skills --skill playwright
-run npx skills add https://github.com/rushuiguan/claude --skill csharp-unit-test
+# csharp-unit-test, k8s-manifests and deploy-verify are project skills in .claude/skills/ (no install needed)
 # Agent 6 — DevOps
 run npx skills add https://github.com/lukasniessen/kubernetes-skill --skill kubernetes-skill

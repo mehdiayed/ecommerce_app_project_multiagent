@@ -1,7 +1,0 @@
-[
-  { "agent": "migration", "repo": "https://github.com/anthropics/skills", "skill": "frontend-design" },
-  { "agent": "codescan",  "repo": "https://github.com/membranedev/application-skills", "skill": "codescene" },
-  { "agent": "qa",        "repo": "https://github.com/openai/skills", "skill": "playwright" },
-  { "agent": "qa",        "repo": "https://github.com/rushuiguan/claude", "skill": "csharp-unit-test" },
-  { "agent": "devops",    "repo": "https://github.com/lukasniessen/kubernetes-skill", "skill": "kubernetes-skill" }
-]

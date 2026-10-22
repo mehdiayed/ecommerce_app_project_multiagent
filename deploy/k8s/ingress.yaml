@@ -1,0 +1,16 @@
+# Requires an ingress controller (e.g. ingress-nginx). Without one, use:
+#   kubectl -n ecommerce port-forward svc/web 8080:80
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ecommerce.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: {name: web, port: {name: http}}

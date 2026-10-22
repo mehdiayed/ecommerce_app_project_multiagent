@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+# Build context = repo root:  docker build -f deploy/Dockerfile.<svc> -t ecommerce/<svc>:local .
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+COPY src/ECommerce.ServiceDefaults/ECommerce.ServiceDefaults.csproj src/ECommerce.ServiceDefaults/
+COPY src/ECommerce.Catalog.Api/ECommerce.Catalog.Api.csproj src/ECommerce.Catalog.Api/
+RUN dotnet restore src/ECommerce.Catalog.Api/ECommerce.Catalog.Api.csproj
+COPY src/ECommerce.ServiceDefaults/ src/ECommerce.ServiceDefaults/
+COPY src/ECommerce.Catalog.Api/ src/ECommerce.Catalog.Api/
+RUN dotnet publish src/ECommerce.Catalog.Api/ECommerce.Catalog.Api.csproj -c Release -o /app --no-restore /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+ENV ASPNETCORE_URLS=http://+:8080 DOTNET_EnableDiagnostics=0
+COPY --from=build /app .
+# aspnet images ship a non-root 'app' user (UID 64198)
+USER 64198
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "ECommerce.Catalog.Api.dll"]

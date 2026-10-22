@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ordering
+  labels: {app.kubernetes.io/name: ordering, app.kubernetes.io/part-of: ecommerce}
+spec:
+  replicas: 1   # catalog/ordering use an in-memory DB: do not scale beyond 1
+  selector:
+    matchLabels: {app.kubernetes.io/name: ordering}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: ordering, app.kubernetes.io/part-of: ecommerce}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 64198
+        runAsGroup: 64198
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: ordering
+          image: ecommerce/ordering:local
+          imagePullPolicy: IfNotPresent   # local images (Docker Desktop); change for a registry
+          ports:
+            - {name: http, containerPort: 8080}
+          env:
+            # ServiceDefaults only maps /health and /alive in Development (see README)
+            - {name: ASPNETCORE_ENVIRONMENT, value: Development}
+            - {name: ASPNETCORE_URLS, value: "http://+:8080"}
+            - {name: services__catalog__http__0, value: "http://catalog"}
+          resources:
+            requests: {cpu: 100m, memory: 192Mi}
+            limits: {cpu: 500m, memory: 384Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          startupProbe:
+            httpGet: {path: /alive, port: http}
+            periodSeconds: 3
+            failureThreshold: 30
+          livenessProbe:
+            httpGet: {path: /alive, port: http}
+            periodSeconds: 10
+          readinessProbe:
+            httpGet: {path: /health, port: http}
+            periodSeconds: 5
+          volumeMounts:
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - {name: tmp, emptyDir: {}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ordering
+  labels: {app.kubernetes.io/name: ordering, app.kubernetes.io/part-of: ecommerce}
+spec:
+  type: ClusterIP
+  selector: {app.kubernetes.io/name: ordering}
+  ports:
+    - {name: http, port: 80, targetPort: http}

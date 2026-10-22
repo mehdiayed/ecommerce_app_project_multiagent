@@ -1,0 +1,5 @@
+**/bin/
+**/obj/
+.git/
+logs/
+node_modules/
